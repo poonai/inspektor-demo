@@ -14,26 +14,26 @@ services:
     ports:
      - 5432:5432
     restart: unless-stopped 
-  controlplane:
-    container_name: controlplane
-    image: schoolboy/inspektor-controlplane:latest
-    volumes:
-     - "./config.yaml:/config.yaml"
-    ports:
-     - 3123:3123
-     - 5003:5003
-    depends_on:
-      - "postgres"
-    command: "./wait-for postgres:5432 -- ./inspektor"
-  dataplane:
-    container_name: dataplane
-    image: "schoolboy/inspektor-dataplane:latest1"
-    ports:  
-     - "8081:8081"
-    environment:
-      RUST_LOG: "inspektor=debug"
-    volumes: 
-     - "./dataplane_config.yaml:/dataplane_config.yaml"
-    command: "./wait-for controlplane:3123 -- ./inspektor --config_file ./dataplane_config.yaml"
+  # controlplane:
+  #   container_name: controlplane
+  #   image: schoolboy/inspektor-controlplane:latest
+  #   volumes:
+  #    - "./config.yaml:/config.yaml"
+  #   ports:
+  #    - 3123:3123
+  #    - 5003:5003
+  #   depends_on:
+  #     - "postgres"
+  #   command: "./wait-for postgres:5432 -- ./inspektor"
+  # dataplane:
+  #   container_name: dataplane
+  #   image: "schoolboy/inspektor-dataplane:latest1"
+  #   ports:  
+  #    - "8081:8081"
+  #   environment:
+  #     RUST_LOG: "inspektor=debug"
+  #   volumes: 
+  #    - "./dataplane_config.yaml:/dataplane_config.yaml"
+  #   command: "./wait-for controlplane:3123 -- ./inspektor --config_file ./dataplane_config.yaml"
 volumes:
   postgres:
